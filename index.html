@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fantavolley Manager</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Fantavolley Manager</h1>
+
+    <!-- Modulo per inserire i dettagli di una squadra -->
+    <div class="form-container">
+        <h2>Nuova Squadra</h2>
+        <input id="teamName" type="text" placeholder="Nome squadra" required>
+        <input id="teamScore" type="number" placeholder="Punteggio squadra" required>
+        <input id="teamPenalties" type="number" placeholder="Penalità squadra" required>
+        <input id="teamPlayers" type="text" placeholder="Giocatori (separati da virgola)" required>
+        <button onclick="createTeam()">Crea Squadra</button>
+    </div>
+
+    <!-- Tabella Squadre -->
+    <h2>Squadre e Dettagli</h2>
+    <table id="teamsTable" class="styled-table">
+        <thead>
+            <tr>
+                <th>Nome Squadra</th>
+                <th>Punteggio</th>
+                <th>Giocatori</th>
+                <th>Penalità</th>
+                <th>Qualificato</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <!-- Modulo per inserire i dettagli di una partita -->
+    <div class="form-container">
+        <h2>Nuova Partita</h2>
+        <input id="team1" type="text" placeholder="Nome Prima Squadra" required>
+        <input id="team2" type="text" placeholder="Nome Seconda Squadra" required>
+        <button onclick="createMatch()">Registra Partita</button>
+    </div>
+
+    <!-- Tabella Giornate -->
+    <h2>Giornate Giocate</h2>
+    <table id="matchesTable" class="styled-table">
+        <thead>
+            <tr>
+                <th>Data</th>
+                <th>Squadra 1</th>
+                <th>Punteggio 1</th>
+                <th>Squadra 2</th>
+                <th>Punteggio 2</th>
+                <th>Vincitore</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <!-- Calendario Interattivo -->
+    <h2>Calendario dei Risultati</h2>
+    <div id="calendar" class="calendar"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
