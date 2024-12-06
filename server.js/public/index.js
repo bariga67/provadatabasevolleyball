@@ -1,57 +1,44 @@
 const express = require('express');
-const sqlite3 = require('sqlite3').verbose();
-const path = require('path');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+
+// Inizializza Express
 const app = express();
-const PORT = process.env.PORT || 3000;
+app.use(bodyParser.json());
 
-// Configura il middleware per interpretare JSON
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+// Connessione a MongoDB
+mongoose.connect('mongodb://localhost:27017/fantavolley', { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log('Connesso al database MongoDB'))
+  .catch(err => console.log('Errore di connessione al database:', err));
 
-// Connessione al database SQLite
-const db = new sqlite3.Database('./database.db', (err) => {
-  if (err) {
-    console.error('Errore nella connessione al database:', err.message);
-  } else {
-    console.log('Connesso al database SQLite.');
-  }
+// Schema per i dati delle squadre
+const teamSchema = new mongoose.Schema({
+  name: String,
+  players: Number,
+  points: Number,
+  penalties: Number,
 });
 
-// Crea la tabella dei punteggi, se non esiste già
-db.run(`CREATE TABLE IF NOT EXISTS punteggi (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  squadra1 TEXT,
-  punteggio1 INTEGER,
-  squadra2 TEXT,
-  punteggio2 INTEGER
-)`);
+const Team = mongoose.model('Team', teamSchema);
 
-// Endpoint POST per inserire un punteggio
-app.post('/inserisci-punteggio', (req, res) => {
-  const { squadra1, punteggio1, squadra2, punteggio2 } = req.body;
+// Rotte per aggiornare i dati della squadra
+app.post('/updateTeam', (req, res) => {
+  const { teamId, name, players, points, penalties } = req.body;
 
-  // Query di inserimento nel database
-  const query = `INSERT INTO punteggi (squadra1, punteggio1, squadra2, punteggio2) VALUES (?, ?, ?, ?)`;
-
-  db.run(query, [squadra1, punteggio1, squadra2, punteggio2], function (err) {
-    if (err) {
-      console.error('Errore durante l\'inserimento dei dati:', err.message);
-      return res.status(500).json({ error: 'Errore nell\'inserimento dei dati' });
-    }
-    res.status(200).json({ success: 'Punteggio inserito con successo', id: this.lastID });
-  });
+  Team.findOneAndUpdate({ _id: teamId }, { name, players, points, penalties }, { upsert: true, new: true })
+    .then(team => res.json(team))
+    .catch(err => res.status(500).json({ error: 'Errore durante l\'aggiornamento della squadra' }));
 });
 
-// Servire file statici dalla cartella "public"
-app.use(express.static(path.join(__dirname, 'public')));
-
-// Route di test
-app.get('/test', (req, res) => {
-  res.send('Questa è una route di test!');
+// Rotta per ottenere i dati di una squadra
+app.get('/getTeam/:teamId', (req, res) => {
+  Team.findById(req.params.teamId)
+    .then(team => res.json(team))
+    .catch(err => res.status(500).json({ error: 'Errore durante il recupero dei dati' }));
 });
 
-// Avvio del server
-app.listen(PORT, () => {
-  console.log(`Server in esecuzione su http://localhost:${PORT}`);
+// Avvia il server
+const port = 3000;
+app.listen(port, () => {
+  console.log(`Server in ascolto sulla porta ${port}`);
 });
-app.use(express.static(path.join(__dirname, 'public')));

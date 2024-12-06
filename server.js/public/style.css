@@ -1,86 +1,60 @@
+/* Stile generale */
 body {
     font-family: Arial, sans-serif;
-    text-align: center;
-    padding: 20px;
-    background-color: #f0f8ff;
-}
-
-h1 {
-    color: #008b8b;
-}
-
-.form-container {
-    margin: 20px 0;
-}
-
-button {
-    padding: 10px;
-    background-color: #20b2aa;
-    color: white;
-    border: none;
-    cursor: pointer;
-    margin-top: 10px;
-}
-
-button:hover {
-    background-color: #2e8b57;
-}
-
-.styled-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 20px 0;
-    font-size: 1em;
-    font-family: Arial, sans-serif;
-    min-width: 400px;
-    border-radius: 5px 5px 0 0;
-    overflow: hidden;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-}
-
-.styled-table thead tr {
-    background-color: #008b8b;
-    color: #ffffff;
-    text-align: left;
-    font-weight: bold;
-}
-
-.styled-table th, .styled-table td {
-    padding: 12px 15px;
-    text-align: center;
-}
-
-.styled-table tbody tr {
-    border-bottom: 1px solid #dddddd;
-}
-
-.styled-table tbody tr:nth-of-type(even) {
-    background-color: #d1eeee;
-}
-
-.styled-table tbody tr:last-of-type {
-    border-bottom: 2px solid #008b8b;
-}
-
-/* Stile per il calendario */
-.calendar {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 5px;
-    margin: 20px auto;
-    width: 100%;
-    max-width: 600px;
-}
-
-.calendar .day {
+    margin: 20px;
+    background-color: #e0f7fa; /* Colore di sfondo ciano chiaro */
+    color: #004d40; /* Testo scuro su sfondo chiaro */
+  }
+  
+  h1, h2 {
+    color: #00695c; /* Titoli con tonalità ciano più scura */
+  }
+  
+  .team-container {
+    background-color: #b2ebf2; /* Colore di sfondo delle sezioni */
+    border: 2px solid #004d40; /* Bordo ciano scuro */
+    border-radius: 10px;
     padding: 15px;
-    background-color: #d1eeee;
-    border-radius: 5px;
-    color: #008b8b;
+    margin-bottom: 20px;
+  }
+  
+  label {
     font-weight: bold;
-}
-
-.calendar .winner {
-    font-size: 0.9em;
-    color: #2e8b57;
-}
+    color: #00796b; /* Testo delle etichette */
+  }
+  
+  input[type="number"] {
+    width: 60px;
+    padding: 5px;
+    margin: 5px 0;
+    border: 1px solid #004d40;
+    border-radius: 5px;
+    background-color: #e0f7fa;
+    color: #004d40;
+  }
+  
+  button {
+    background-color: #004d40; /* Bottone con colore ciano scuro */
+    color: #ffffff; /* Testo bianco */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  button:hover {
+    background-color: #00796b; /* Bottone più chiaro al passaggio del mouse */
+  }
+  
+  .result {
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #004d40;
+  }
+  
+  p {
+    margin: 5px 0;
+  }
+  

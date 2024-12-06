@@ -1,67 +1,228 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fantavolley Manager</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fantavolley</title>
+  <style>
+    /* Stile per il centramento del contenuto */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #e0f7fa; /* Sfondo ciano chiaro */
+      color: #004d40; /* Colore del testo */
+    }
+
+    #main-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      background-color: #b2ebf2; /* Sfondo del contenitore */
+      border: 2px solid #004d40;
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      width: 80%;
+      max-width: 600px;
+    }
+
+    h1, h2 {
+      color: #00695c;
+    }
+
+    .team-container {
+      margin-bottom: 20px;
+      padding: 10px;
+      background-color: #e0f7fa;
+      border: 1px solid #004d40;
+      border-radius: 10px;
+    }
+
+    label {
+      font-weight: bold;
+      color: #00796b;
+    }
+
+    input[type="number"], input[type="text"] {
+      width: 60px;
+      padding: 5px;
+      margin: 5px 0;
+      border: 1px solid #004d40;
+      border-radius: 5px;
+      background-color: #ffffff;
+      color: #004d40;
+    }
+
+    button {
+      background-color: #004d40;
+      color: #ffffff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background-color: #00796b;
+    }
+
+    table {
+      width: 100%;
+      margin-top: 20px;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      border: 1px solid #004d40;
+      padding: 10px;
+      text-align: center;
+    }
+
+    th {
+      background-color: #004d40;
+      color: #ffffff;
+    }
+  </style>
 </head>
 <body>
-    <h1>Fantavolley Manager</h1>
+  <div id="main-container">
+    <h1>Fantavolley</h1>
 
-    <!-- Modulo per inserire i dettagli di una squadra -->
-    <div class="form-container">
-        <h2>Nuova Squadra</h2>
-        <input id="teamName" type="text" placeholder="Nome squadra" required>
-        <input id="teamScore" type="number" placeholder="Punteggio squadra" required>
-        <input id="teamPenalties" type="number" placeholder="Penalità squadra" required>
-        <input id="teamPlayers" type="text" placeholder="Giocatori (separati da virgola)" required>
-        <button onclick="createTeam()">Crea Squadra</button>
+    <!-- Sezione per Squadra 1 -->
+    <div class="team-container" id="team1">
+      <h2>Squadra 1</h2>
+      <label for="team1-name">Nome della squadra: </label>
+      <input type="text" id="team1-name" placeholder="Nome Squadra 1" onchange="saveTeamData('team1')"><br>
+      <label for="team1-players">Numero di giocatori: </label>
+      <input type="number" id="team1-players" min="0" value="0" onchange="updateTotal('team1')"><br>
+      <label for="team1-points">Punti assegnati: </label>
+      <input type="number" id="team1-points" min="0" value="0" onchange="updateTotal('team1')"><br>
+      <label for="team1-penalties">Penalità: </label>
+      <input type="number" id="team1-penalties" min="0" value="0" onchange="updateTotal('team1')"><br>
+      <p id="team1-total">Punteggio effettivo: 0</p>
     </div>
 
-    <!-- Tabella Squadre -->
-    <h2>Squadre e Dettagli</h2>
-    <table id="teamsTable" class="styled-table">
-        <thead>
-            <tr>
-                <th>Nome Squadra</th>
-                <th>Punteggio</th>
-                <th>Giocatori</th>
-                <th>Penalità</th>
-                <th>Qualificato</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
-
-    <!-- Modulo per inserire i dettagli di una partita -->
-    <div class="form-container">
-        <h2>Nuova Partita</h2>
-        <input id="team1" type="text" placeholder="Nome Prima Squadra" required>
-        <input id="team2" type="text" placeholder="Nome Seconda Squadra" required>
-        <button onclick="createMatch()">Registra Partita</button>
+    <!-- Sezione per Squadra 2 -->
+    <div class="team-container" id="team2">
+      <h2>Squadra 2</h2>
+      <label for="team2-name">Nome della squadra: </label>
+      <input type="text" id="team2-name" placeholder="Nome Squadra 2" onchange="saveTeamData('team2')"><br>
+      <label for="team2-players">Numero di giocatori: </label>
+      <input type="number" id="team2-players" min="0" value="0" onchange="updateTotal('team2')"><br>
+      <label for="team2-points">Punti assegnati: </label>
+      <input type="number" id="team2-points" min="0" value="0" onchange="updateTotal('team2')"><br>
+      <label for="team2-penalties">Penalità: </label>
+      <input type="number" id="team2-penalties" min="0" value="0" onchange="updateTotal('team2')"><br>
+      <p id="team2-total">Punteggio effettivo: 0</p>
     </div>
 
-    <!-- Tabella Giornate -->
-    <h2>Giornate Giocate</h2>
-    <table id="matchesTable" class="styled-table">
-        <thead>
-            <tr>
-                <th>Data</th>
-                <th>Squadra 1</th>
-                <th>Punteggio 1</th>
-                <th>Squadra 2</th>
-                <th>Punteggio 2</th>
-                <th>Vincitore</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
+    <button onclick="determineWinner()">Calcola Vincitore</button>
+    <p class="result" id="winner"></p>
+
+    <h2>Calendario Interattivo</h2>
+    <table id="calendar">
+      <thead>
+        <tr>
+          <th>Giornata</th>
+          <th>Vincitore</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Le righe saranno aggiunte dinamicamente -->
+      </tbody>
     </table>
+  </div>
 
-    <!-- Calendario Interattivo -->
-    <h2>Calendario dei Risultati</h2>
-    <div id="calendar" class="calendar"></div>
+  <script>
+    // Funzione per aggiornare il punteggio effettivo di una squadra
+    function updateTotal(team) {
+      const players = parseInt(document.getElementById(`${team}-players`).value) || 0;
+      const points = parseInt(document.getElementById(`${team}-points`).value) || 0;
+      const penalties = parseInt(document.getElementById(`${team}-penalties`).value) || 0;
+      const total = points - penalties; // I giocatori non vengono conteggiati
+      document.getElementById(`${team}-total`).innerText = `Punteggio effettivo: ${total}`;
 
-    <script src="script.js"></script>
+      // Salva i dati nel database tramite API
+      saveTeamData(team);
+    }
+
+    // Funzione per inviare i dati della squadra al server
+    function saveTeamData(team) {
+      const teamName = document.getElementById(`${team}-name`).value;
+      const players = document.getElementById(`${team}-players`).value;
+      const points = document.getElementById(`${team}-points`).value;
+      const penalties = document.getElementById(`${team}-penalties`).value;
+
+      // Crea un oggetto con i dati della squadra
+      const teamData = {
+        teamId: team, // Può essere un ID univoco per ogni squadra
+        name: teamName,
+        players: players,
+        points: points,
+        penalties: penalties
+      };
+
+      // Fai una richiesta POST per salvare i dati nel database
+      fetch('http://localhost:3000/updateTeam', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(teamData) // Converte l'oggetto in formato JSON
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Squadra salvata:', data);
+      })
+      .catch(error => {
+        console.error('Errore nel salvataggio dei dati:', error);
+      });
+    }
+
+    // Funzione per determinare il vincitore tra le due squadre
+    function determineWinner() {
+      const team1Points = (parseInt(document.getElementById('team1-points').value || 0)) -
+                          parseInt(document.getElementById('team1-penalties').value || 0);
+      const team2Points = (parseInt(document.getElementById('team2-points').value || 0)) -
+                          parseInt(document.getElementById('team2-penalties').value || 0);
+
+      let winnerText = '';
+      if (team1Points > team2Points) {
+        winnerText = `${document.getElementById('team1-name').value} è la vincitrice!`;
+        addToCalendar(document.getElementById('team1-name').value);
+      } else if (team2Points > team1Points) {
+        winnerText = `${document.getElementById('team2-name').value} è la vincitrice!`;
+        addToCalendar(document.getElementById('team2-name').value);
+      } else {
+        winnerText = 'È un pareggio!';
+        addToCalendar('Pareggio');
+      }
+      document.getElementById('winner').innerText = winnerText;
+    }
+
+    // Funzione per aggiungere un vincitore al calendario
+    function addToCalendar(winner) {
+      const tableBody = document.querySelector('#calendar tbody');
+      const newRow = document.createElement('tr');
+      const giornataCell = document.createElement('td');
+      const winnerCell = document.createElement('td');
+
+      const currentRows = tableBody.children.length + 1;
+      giornataCell.innerText = `Giornata ${currentRows}`;
+      winnerCell.innerText = winner;
+
+      newRow.appendChild(giornataCell);
+      newRow.appendChild(winnerCell);
+      tableBody.appendChild(newRow);
+    }
+  </script>
 </body>
 </html>
