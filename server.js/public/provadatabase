@@ -1,0 +1,77 @@
+-- Creazione del database
+CREATE DATABASE Fantavolley;
+USE Fantavolley;
+
+
+-- Tabella per i Giocatori
+CREATE TABLE Giocatori (
+    IDGiocatore INT AUTO_INCREMENT PRIMARY KEY,
+    Nome VARCHAR(50) NOT NULL,
+    Cognome VARCHAR(50) NOT NULL,
+    Ruolo ENUM('Palleggiatore', 'Opposto', 'Centrale', 'Schiacciatore', 'Libero') NOT NULL,
+    SquadraReale VARCHAR(50) NOT NULL,
+    Prezzo DECIMAL(10, 2) NOT NULL
+);
+
+-- Tabella per le Squadre del Fantavolley
+CREATE TABLE SquadreFantavolley (
+    IDSquadra INT AUTO_INCREMENT PRIMARY KEY,
+    Nome VARCHAR(50) NOT NULL,
+    Proprietario VARCHAR(50) NOT NULL,
+    CreditoResiduo DECIMAL(10, 2) NOT NULL DEFAULT 100
+);
+
+-- Tabella per i Giocatori assegnati alle Squadre del Fantavolley
+CREATE TABLE SquadreGiocatori (
+    IDSquadra INT NOT NULL,
+    IDGiocatore INT NOT NULL,
+    PRIMARY KEY (IDSquadra, IDGiocatore),
+    FOREIGN KEY (IDSquadra) REFERENCES SquadreFantavolley(IDSquadra),
+    FOREIGN KEY (IDGiocatore) REFERENCES Giocatori(IDGiocatore)
+);
+
+-- Tabella per le Partite
+CREATE TABLE Partite (
+    IDPartita INT AUTO_INCREMENT PRIMARY KEY,
+    Data DATE NOT NULL,
+    SquadraCasa VARCHAR(50) NOT NULL,
+    SquadraOspite VARCHAR(50) NOT NULL,
+    PunteggioCasa INT NOT NULL,
+    PunteggioOspite INT NOT NULL
+);
+
+-- Tabella per le Statistiche dei Giocatori nelle Partite
+CREATE TABLE StatisticheGiocatori (
+    IDStatistiche INT AUTO_INCREMENT PRIMARY KEY,
+    IDPartita INT NOT NULL,
+    IDGiocatore INT NOT NULL,
+    Punti INT NOT NULL DEFAULT 0,
+    Muri INT NOT NULL DEFAULT 0,
+    Ace INT NOT NULL DEFAULT 0,
+    Errori INT NOT NULL DEFAULT 0,
+    FOREIGN KEY (IDPartita) REFERENCES Partite(IDPartita),
+    FOREIGN KEY (IDGiocatore) REFERENCES Giocatori(IDGiocatore)
+);
+
+-- Tabella per i Risultati di ogni Squadra Fantavolley
+CREATE TABLE RisultatiFantavolley (
+    IDSquadra INT NOT NULL,
+    IDPartita INT NOT NULL,
+    PunteggioTotale DECIMAL(10, 2) NOT NULL,
+    PRIMARY KEY (IDSquadra, IDPartita),
+    FOREIGN KEY (IDSquadra) REFERENCES SquadreFantavolley(IDSquadra),
+    FOREIGN KEY (IDPartita) REFERENCES Partite(IDPartita)
+);
+
+-- Inserimento di dati di esempio
+INSERT INTO Giocatori (Nome, Cognome, Ruolo, SquadraReale, Prezzo)
+VALUES 
+('Luca', 'Rossi', 'Palleggiatore', 'Modena', 15.5),
+('Marco', 'Verdi', 'Schiacciatore', 'Trento', 20.0),
+('Andrea', 'Bianchi', 'Libero', 'Perugia', 10.0),
+('Giulia', 'Neri', 'Centrale', 'Civitanova', 18.5);
+
+INSERT INTO SquadreFantavolley (Nome, Proprietario, CreditoResiduo)
+VALUES 
+('Team Azzurro', 'Giovanni', 100),
+('Team Rosso', 'Maria', 100);
